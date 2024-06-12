@@ -1,3 +1,3 @@
 export enum CollectionSlugs {
-    users = 'users'
+  users = 'users',
 }

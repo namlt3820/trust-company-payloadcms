@@ -13,13 +13,13 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(),
-    webpack: config => ({
+    webpack: (config) => ({
       ...config,
       resolve: {
         ...config.resolve,
         alias: {
           ...config.resolve.alias,
-          "@": path.resolve(__dirname)
+          '@': path.resolve(__dirname),
         },
       },
     }),

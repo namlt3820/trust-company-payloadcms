@@ -22,23 +22,24 @@ export const clearDBDev: PayloadHandler = async (req, res): Promise<void> => {
   try {
     payload.logger.info(`— Clearing collections and globals...`)
     await Promise.all([
-        ...collections.map(async collection =>
-          payload.delete({
-            collection,
-            where: {},
-          }),
-        ),
+      ...collections.map(async (collection) =>
+        payload.delete({
+          collection,
+          where: {},
+        })
+      ),
 
-        ...globals.map(async global =>
-          payload.updateGlobal({
-            slug: global,
-            data: {},
-          }),
-        ),
-      ])
+      ...globals.map(async (global) =>
+        payload.updateGlobal({
+          slug: global,
+          data: {},
+        })
+      ),
+    ])
     res.json({ success: true })
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : ErrorMessages.UnknownError
+    const message =
+      error instanceof Error ? error.message : ErrorMessages.UnknownError
     payload.logger.error(message)
     res.json({ error: message })
   }
