@@ -1,17 +1,19 @@
 import path from 'path'
 
-import { payloadCloud } from '@payloadcms/plugin-cloud'
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { webpackBundler } from '@payloadcms/bundler-webpack'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { payloadCloud } from '@payloadcms/plugin-cloud'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { buildConfig } from 'payload/config'
 
+import Admins from './collections/Admins'
+import { CollectionSlugs } from './collections/CollectionSlugs'
 import Users from './collections/Users'
 import { clearDBDev } from './endpoints/clear-db-dev'
 
 export default buildConfig({
   admin: {
-    user: Users.slug,
+    user: CollectionSlugs.admin,
     bundler: webpackBundler(),
     webpack: (config) => ({
       ...config,
@@ -25,7 +27,7 @@ export default buildConfig({
     }),
   },
   editor: slateEditor({}),
-  collections: [Users],
+  collections: [Users, Admins],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
