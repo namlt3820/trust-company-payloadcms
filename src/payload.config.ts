@@ -7,11 +7,22 @@ import { slateEditor } from '@payloadcms/richtext-slate'
 import { buildConfig } from 'payload/config'
 
 import Users from './collections/Users'
+import { clearDBDev } from './endpoints/clear-db-dev'
 
 export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(),
+    webpack: config => ({
+      ...config,
+      resolve: {
+        ...config.resolve,
+        alias: {
+          ...config.resolve.alias,
+          "@": path.resolve(__dirname)
+        },
+      },
+    }),
   },
   editor: slateEditor({}),
   collections: [Users],
@@ -25,4 +36,11 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
   }),
+  endpoints: [
+    {
+      path: '/clear-db-dev',
+      method: 'delete',
+      handler: clearDBDev,
+    },
+  ],
 })
