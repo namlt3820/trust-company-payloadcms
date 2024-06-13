@@ -8,6 +8,7 @@ import { buildConfig } from 'payload/config'
 
 import Admins from './collections/Admins'
 import { CollectionSlugs } from './collections/CollectionSlugs'
+import Comments from './collections/Comments'
 import Companies from './collections/Companies'
 import { Media } from './collections/Media'
 import Reviews from './collections/Reviews'
@@ -30,7 +31,7 @@ export default buildConfig({
     }),
   },
   editor: slateEditor({}),
-  collections: [Users, Admins, Media, Companies, Reviews],
+  collections: [Users, Admins, Media, Companies, Reviews, Comments],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
