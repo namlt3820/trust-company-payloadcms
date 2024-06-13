@@ -1,8 +1,12 @@
+import { Comment } from 'payload/generated-types'
 import { CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
 
 const Comments: CollectionConfig = {
   slug: CollectionSlugs.comments,
+  admin: {
+    useAsTitle: 'summary',
+  },
   fields: [
     {
       name: 'content',
@@ -25,6 +29,18 @@ const Comments: CollectionConfig = {
       required: true,
       index: true,
       label: 'Review',
+    },
+    {
+      name: 'summary',
+      type: 'text',
+      maxLength: 120,
+      hooks: {
+        beforeChange: [
+          ({ data }: { data?: Partial<Comment> }) => {
+            return data?.content?.substring(0, 100) + '...' || ''
+          },
+        ],
+      },
     },
   ],
 }

@@ -1,4 +1,5 @@
 import { CompanyRates } from '@/constants/CompanyRates'
+import { Review } from 'payload/generated-types'
 import { CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
 
@@ -7,6 +8,7 @@ const Reviews: CollectionConfig = {
   admin: {
     enableRichTextLink: false,
     enableRichTextRelationship: false,
+    useAsTitle: 'summary',
   },
   fields: [
     {
@@ -117,6 +119,18 @@ const Reviews: CollectionConfig = {
       required: true,
       index: true,
       label: 'Company',
+    },
+    {
+      name: 'summary',
+      type: 'text',
+      maxLength: 120,
+      hooks: {
+        beforeChange: [
+          ({ data }: { data?: Partial<Review> }) => {
+            return data?.detailedReview?.substring(0, 100) + '...' || ''
+          },
+        ],
+      },
     },
   ],
 }

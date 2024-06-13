@@ -4,4 +4,5 @@ export enum CollectionSlugs {
   companies = 'companies',
   reviews = 'reviews',
   comments = 'comments',
+  reactions = 'reactions',
 }

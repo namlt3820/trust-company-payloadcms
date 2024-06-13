@@ -11,6 +11,7 @@ import { CollectionSlugs } from './collections/CollectionSlugs'
 import Comments from './collections/Comments'
 import Companies from './collections/Companies'
 import { Media } from './collections/Media'
+import Reactions from './collections/Reactions'
 import Reviews from './collections/Reviews'
 import Users from './collections/Users'
 import { clearDBDev } from './endpoints/clear-db-dev'
@@ -31,7 +32,7 @@ export default buildConfig({
     }),
   },
   editor: slateEditor({}),
-  collections: [Users, Admins, Media, Companies, Reviews, Comments],
+  collections: [Users, Admins, Media, Companies, Reviews, Comments, Reactions],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
