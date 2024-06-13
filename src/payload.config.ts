@@ -10,12 +10,13 @@ import Admins from './collections/Admins'
 import { CollectionSlugs } from './collections/CollectionSlugs'
 import Companies from './collections/Companies'
 import { Media } from './collections/Media'
+import Reviews from './collections/Reviews'
 import Users from './collections/Users'
 import { clearDBDev } from './endpoints/clear-db-dev'
 
 export default buildConfig({
   admin: {
-    user: CollectionSlugs.admin,
+    user: CollectionSlugs.admins,
     bundler: webpackBundler(),
     webpack: (config) => ({
       ...config,
@@ -29,7 +30,7 @@ export default buildConfig({
     }),
   },
   editor: slateEditor({}),
-  collections: [Users, Admins, Media, Companies],
+  collections: [Users, Admins, Media, Companies, Reviews],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },

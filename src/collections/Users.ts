@@ -16,8 +16,16 @@ const Users: CollectionConfig = {
       name: 'name',
       type: 'text',
       validate: (val) => {
-        return checkSchema(val, joi.string().max(30).alphanum())
+        return checkSchema(
+          val,
+          joi
+            .string()
+            .required()
+            .max(50)
+            .regex(/^\w+(?:\s+\w+)*$/)
+        )
       },
+      required: true,
     },
   ],
 }

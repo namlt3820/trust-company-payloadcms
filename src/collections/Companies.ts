@@ -14,16 +14,14 @@ const Companies: CollectionConfig = {
     {
       name: 'name',
       type: 'text',
-      validate: (val) => {
-        return checkSchema(val, joi.string().max(150))
-      },
+      maxLength: 150,
       required: true,
       unique: true,
     },
     {
       name: 'address',
       type: 'text',
-      validate: (val) => checkSchema(val, joi.string().max(200)),
+      maxLength: 200,
       required: true,
     },
     {
