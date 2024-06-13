@@ -3,7 +3,11 @@ import { Environments } from '@/constants/Environments'
 import { ErrorMessages } from '@/constants/ErrorMessages'
 import type { PayloadHandler } from 'payload/config'
 
-const collections = [CollectionSlugs.users]
+const collections = [
+  ...Object.values(CollectionSlugs),
+  'payload-migrations',
+  'payload-preferences',
+]
 
 export const clearDBDev: PayloadHandler = async (req, res): Promise<void> => {
   const { user, payload } = req
@@ -23,6 +27,7 @@ export const clearDBDev: PayloadHandler = async (req, res): Promise<void> => {
     await Promise.all([
       ...collections.map(async (collection) =>
         payload.delete({
+          // @ts-ignore
           collection,
           where: {},
         })

@@ -7,4 +7,5 @@ export enum CollectionSlugs {
   reactions = 'reactions',
   feedbacks = 'feedbacks',
   reports = 'reports',
+  media = 'media',
 }

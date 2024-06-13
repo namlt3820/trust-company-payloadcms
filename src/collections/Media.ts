@@ -1,8 +1,9 @@
 import path from 'path'
 import type { CollectionConfig } from 'payload/types'
+import { CollectionSlugs } from './CollectionSlugs'
 
 export const Media: CollectionConfig = {
-  slug: 'media',
+  slug: CollectionSlugs.media,
   admin: {
     enableRichTextLink: false,
     enableRichTextRelationship: false,
