@@ -1,10 +1,9 @@
-import type { PayloadHandler } from 'payload/config'
+import { CollectionSlugs } from '@/collections/CollectionSlugs'
 import { Environments } from '@/constants/Environments'
 import { ErrorMessages } from '@/constants/ErrorMessages'
-import { CollectionSlugs } from '@/collections/CollectionSlugs'
+import type { PayloadHandler } from 'payload/config'
 
 const collections = [CollectionSlugs.users]
-const globals = []
 
 export const clearDBDev: PayloadHandler = async (req, res): Promise<void> => {
   const { user, payload } = req
@@ -26,13 +25,6 @@ export const clearDBDev: PayloadHandler = async (req, res): Promise<void> => {
         payload.delete({
           collection,
           where: {},
-        })
-      ),
-
-      ...globals.map(async (global) =>
-        payload.updateGlobal({
-          slug: global,
-          data: {},
         })
       ),
     ])
