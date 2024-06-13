@@ -13,6 +13,7 @@ import Companies from './collections/Companies'
 import Feedbacks from './collections/Feedback'
 import { Media } from './collections/Media'
 import Reactions from './collections/Reactions'
+import Reports from './collections/Reports'
 import Reviews from './collections/Reviews'
 import Users from './collections/Users'
 import { clearDBDev } from './endpoints/clear-db-dev'
@@ -42,6 +43,7 @@ export default buildConfig({
     Comments,
     Reactions,
     Feedbacks,
+    Reports,
   ],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
