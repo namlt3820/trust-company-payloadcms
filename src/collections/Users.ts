@@ -1,3 +1,4 @@
+import { checkSchema } from '@/utilities/validateWithJoi'
 import joi from 'joi'
 import { CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
@@ -15,10 +16,7 @@ const Users: CollectionConfig = {
       name: 'name',
       type: 'text',
       validate: (val) => {
-        const schema = joi.string().max(30).alphanum()
-        const { error } = schema.validate(val)
-
-        return error ? error.message : true
+        return checkSchema(val, joi.string().max(30).alphanum())
       },
     },
   ],

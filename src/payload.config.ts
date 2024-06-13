@@ -8,6 +8,8 @@ import { buildConfig } from 'payload/config'
 
 import Admins from './collections/Admins'
 import { CollectionSlugs } from './collections/CollectionSlugs'
+import Companies from './collections/Companies'
+import { Media } from './collections/Media'
 import Users from './collections/Users'
 import { clearDBDev } from './endpoints/clear-db-dev'
 
@@ -27,7 +29,7 @@ export default buildConfig({
     }),
   },
   editor: slateEditor({}),
-  collections: [Users, Admins],
+  collections: [Users, Admins, Media, Companies],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
@@ -45,4 +47,9 @@ export default buildConfig({
       handler: clearDBDev,
     },
   ],
+  upload: {
+    limits: {
+      fileSize: 500000, // 0.5MB, written in bytes
+    },
+  },
 })
