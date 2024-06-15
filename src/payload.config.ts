@@ -67,4 +67,6 @@ export default buildConfig({
       fileSize: 500000, // 0.5MB, written in bytes
     },
   },
+  csrf: ['http://localhost:3001'],
+  cors: ['http://localhost:3001'],
 })
