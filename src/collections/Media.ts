@@ -11,14 +11,6 @@ export const Media: CollectionConfig = {
   upload: {
     staticDir: path.resolve(__dirname, '../../media'),
     mimeTypes: ['image/*'],
-    imageSizes: [
-      {
-        name: 'small',
-        height: 150,
-        width: 150,
-      },
-    ],
-    adminThumbnail: 'small',
   },
   access: {
     read: () => true,
