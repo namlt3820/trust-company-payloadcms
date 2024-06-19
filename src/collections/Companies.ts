@@ -80,6 +80,9 @@ const Companies: CollectionConfig = {
       validate: (val) => checkSchema(val, joi.string().uri()),
     },
   ],
+  access: {
+    read: () => true,
+  },
 }
 
 export default Companies
