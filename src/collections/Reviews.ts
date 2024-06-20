@@ -133,6 +133,9 @@ const Reviews: CollectionConfig = {
       },
     },
   ],
+  access: {
+    read: () => true,
+  },
 }
 
 export default Reviews
