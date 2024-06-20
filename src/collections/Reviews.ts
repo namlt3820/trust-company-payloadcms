@@ -1,7 +1,25 @@
 import { CompanyRates } from '@/constants/CompanyRates'
+import { slateEditor } from '@payloadcms/richtext-slate'
 import { Review } from 'payload/generated-types'
 import { CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
+
+const aggregateTextValues = (obj, field) => {
+  let result = ''
+
+  function traverse(obj) {
+    for (let key in obj) {
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        traverse(obj[key]) // Recursively traverse nested objects
+      } else if (key === field) {
+        result += obj[key] + ' ' // Aggregate the value of the specified field
+      }
+    }
+  }
+
+  traverse(obj)
+  return result
+}
 
 const Reviews: CollectionConfig = {
   slug: CollectionSlugs.reviews,
@@ -73,36 +91,41 @@ const Reviews: CollectionConfig = {
           name: 'facilities',
           label: 'Facilities',
           type: 'textarea',
-          maxLength: 200,
+          maxLength: 500,
         },
         {
           name: 'team',
           label: 'Team',
           type: 'textarea',
-          maxLength: 200,
+          maxLength: 500,
         },
 
         {
           name: 'process',
           label: 'Process',
           type: 'textarea',
-          maxLength: 200,
+          maxLength: 500,
         },
 
         {
           name: 'benefits',
           label: 'Benefits',
           type: 'textarea',
-          maxLength: 200,
+          maxLength: 500,
         },
       ],
     },
     {
       name: 'detailedReview',
       label: 'Detailed review',
-      type: 'textarea',
+      type: 'richText',
       required: true,
-      maxLength: 10000,
+      editor: slateEditor({
+        admin: {
+          elements: ['ol', 'ul'],
+          leaves: ['bold', 'italic', 'strikethrough', 'underline'],
+        },
+      }),
     },
     {
       name: 'user',
@@ -127,7 +150,15 @@ const Reviews: CollectionConfig = {
       hooks: {
         beforeChange: [
           ({ data }: { data?: Partial<Review> }) => {
-            return data?.detailedReview?.substring(0, 100) + '...' || ''
+            let allText: string
+
+            try {
+              allText = aggregateTextValues(data?.detailedReview, 'text')
+            } catch (error) {
+              allText = ''
+            }
+
+            return allText?.substring(0, 100) + '...' || ''
           },
         ],
       },
