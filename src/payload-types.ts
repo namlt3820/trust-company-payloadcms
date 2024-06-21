@@ -15,6 +15,8 @@ export interface Config {
     reviews: Review;
     comments: Comment;
     reactions: Reaction;
+    feedbacks: Feedback;
+    reports: Report;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -71,16 +73,6 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-  sizes?: {
-    small?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -115,10 +107,16 @@ export interface Review {
     process?: string | null;
     benefits?: string | null;
   };
-  detailedReview: string;
+  detailedReview: {
+    [k: string]: unknown;
+  }[];
   user: string | User;
   company: string | Company;
   summary?: string | null;
+  populatedUser?: {
+    id?: string | null;
+    name?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -142,6 +140,41 @@ export interface Comment {
 export interface Reaction {
   id: string;
   type: 'thumbs_up' | 'thumbs_down' | 'red_heart' | 'skull';
+  target:
+    | {
+        relationTo: 'comments';
+        value: string | Comment;
+      }
+    | {
+        relationTo: 'reviews';
+        value: string | Review;
+      };
+  user: string | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feedbacks".
+ */
+export interface Feedback {
+  id: string;
+  title: string;
+  isFinised?: boolean | null;
+  feedback: string;
+  response?: string | null;
+  user: string | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reports".
+ */
+export interface Report {
+  id: string;
+  type: 'defamation' | 'law_violation' | 'misinformation' | 'scam' | 'spam' | 'violence';
+  otherType?: string | null;
   target:
     | {
         relationTo: 'comments';
