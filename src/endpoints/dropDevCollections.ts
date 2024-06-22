@@ -9,7 +9,10 @@ const collections = [
   'payload-preferences',
 ]
 
-export const clearDBDev: PayloadHandler = async (req, res): Promise<void> => {
+export const dropDevCollections: PayloadHandler = async (
+  req,
+  res
+): Promise<void> => {
   const { user, payload } = req
 
   if (process.env.NODE_ENV !== Environments.development) {

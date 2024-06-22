@@ -1,11 +1,15 @@
 import { ReactionTypes } from '@/constants/ReactionTypes'
 import { CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
+import { getReactionCountByType } from '@/endpoints/getReactionCountByType'
 
 const Reactions: CollectionConfig = {
   slug: CollectionSlugs.reactions,
   admin: {
     useAsTitle: 'type',
+  },
+  access: {
+    read: () => true,
   },
   fields: [
     {
@@ -51,6 +55,11 @@ const Reactions: CollectionConfig = {
       label: 'User',
     },
   ],
+  endpoints: [{
+    path: '/count-by-type',
+    method: 'get',
+    handler: getReactionCountByType,
+  },]
 }
 
 export default Reactions

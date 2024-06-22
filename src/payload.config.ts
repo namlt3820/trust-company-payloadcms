@@ -5,7 +5,6 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloud } from '@payloadcms/plugin-cloud'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { buildConfig } from 'payload/config'
-
 import Admins from './collections/Admins'
 import { CollectionSlugs } from './collections/CollectionSlugs'
 import Comments from './collections/Comments'
@@ -16,7 +15,7 @@ import Reactions from './collections/Reactions'
 import Reports from './collections/Reports'
 import Reviews from './collections/Reviews'
 import Users from './collections/Users'
-import { clearDBDev } from './endpoints/clear-db-dev'
+import { dropDevCollections } from './endpoints/dropDevCollections'
 
 export default buildConfig({
   admin: {
@@ -57,9 +56,9 @@ export default buildConfig({
   }),
   endpoints: [
     {
-      path: '/clear-db-dev',
+      path: '/drop-dev-collections',
       method: 'delete',
-      handler: clearDBDev,
+      handler: dropDevCollections,
     },
   ],
   upload: {

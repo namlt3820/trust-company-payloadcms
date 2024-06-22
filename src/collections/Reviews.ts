@@ -1,4 +1,6 @@
 import { CompanyRates } from '@/constants/CompanyRates'
+import { populatedUserField } from '@/fields/populatedUser'
+import { populateUser } from '@/hooks/populateUser'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { Review } from 'payload/generated-types'
 import { CollectionConfig } from 'payload/types'
@@ -29,24 +31,7 @@ const Reviews: CollectionConfig = {
     useAsTitle: 'summary',
   },
   hooks: {
-    afterRead: [
-      async ({ doc, req: { payload } }) => {
-        if (doc?.user) {
-          const userDoc = await payload.findByID({
-            collection: 'users',
-            id: typeof doc.user === 'object' ? doc?.user?.id : doc?.user,
-            depth: 0,
-          })
-
-          doc.populatedUser = {
-            id: userDoc.id,
-            name: userDoc.name,
-          }
-        }
-
-        return doc
-      },
-    ],
+    afterRead: [populateUser],
   },
   fields: [
     {
@@ -183,27 +168,7 @@ const Reviews: CollectionConfig = {
         ],
       },
     },
-    {
-      name: 'populatedUser',
-      type: 'group',
-      admin: {
-        readOnly: true,
-        disabled: true,
-      },
-      access: {
-        update: () => false,
-      },
-      fields: [
-        {
-          name: 'id',
-          type: 'text',
-        },
-        {
-          name: 'name',
-          type: 'text',
-        },
-      ],
-    },
+    populatedUserField(),
   ],
   access: {
     read: () => true,

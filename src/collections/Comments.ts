@@ -1,3 +1,5 @@
+import { populatedUserField } from '@/fields/populatedUser'
+import { populateUser } from '@/hooks/populateUser'
 import { Comment } from 'payload/generated-types'
 import { CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
@@ -42,7 +44,14 @@ const Comments: CollectionConfig = {
         ],
       },
     },
+    populatedUserField(),
   ],
+  access: {
+    read: () => true,
+  },
+  hooks: {
+    afterRead: [populateUser],
+  },
 }
 
 export default Comments

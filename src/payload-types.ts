@@ -130,6 +130,10 @@ export interface Comment {
   user: string | User;
   review: string | Review;
   summary?: string | null;
+  populatedUser?: {
+    id?: string | null;
+    name?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
