@@ -1,3 +1,4 @@
+import { getCommentCountByReview } from '@/endpoints/getCommentCountByReview'
 import { populatedUserField } from '@/fields/populatedUser'
 import { populateUser } from '@/hooks/populateUser'
 import { Comment } from 'payload/generated-types'
@@ -52,6 +53,13 @@ const Comments: CollectionConfig = {
   hooks: {
     afterRead: [populateUser],
   },
+  endpoints: [
+    {
+      path: '/count-by-review',
+      method: 'get',
+      handler: getCommentCountByReview,
+    },
+  ],
 }
 
 export default Comments

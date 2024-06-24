@@ -1,6 +1,7 @@
 import { CollectionSlugs } from '@/collections/CollectionSlugs'
 import { ErrorMessages } from '@/constants/ErrorMessages'
 import { ReactionTypes } from '@/constants/ReactionTypes'
+import { isArrayString } from '@/utilities/isArrayString'
 import _ from 'lodash'
 import type { PayloadHandler } from 'payload/config'
 import { Reaction } from 'payload/generated-types'
@@ -13,10 +14,6 @@ export type ReactionCountByType = {
   redHeart: number
   skull: number
   hasReactions?: Reaction[]
-}
-
-function isArrayString(arr) {
-  return _.isArray(arr) && _.every(arr, (element) => _.isString(element))
 }
 
 function countReaction(
@@ -56,15 +53,13 @@ function countReaction(
   return data
 }
 
-export const getReactionCountByType: PayloadHandler = async (
-  req,
-  res
-): Promise<ReactionCountByType[]> => {
+export const getReactionCountByType: PayloadHandler = async (req, res) => {
   const { user, payload } = req
   const userId = user?.id || ''
 
   try {
-    if (!req.query) return []
+    const reactionCountByType: ReactionCountByType[] = []
+    if (!req.query) res.json({ reactions: reactionCountByType })
 
     const { reviews, comments } = req.query
 
@@ -73,8 +68,6 @@ export const getReactionCountByType: PayloadHandler = async (
 
     const uniqueComments =
       comments && isArrayString(comments) ? _.uniq(comments as string[]) : []
-
-    const reactionCountByType: ReactionCountByType[] = []
 
     const reactions = await payload.find({
       collection: CollectionSlugs.reactions,
