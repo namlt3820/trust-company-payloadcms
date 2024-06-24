@@ -1,7 +1,7 @@
 import { ReactionTypes } from '@/constants/ReactionTypes'
+import { getReactionCountByType } from '@/endpoints/getReactionCountByType'
 import { CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
-import { getReactionCountByType } from '@/endpoints/getReactionCountByType'
 
 const Reactions: CollectionConfig = {
   slug: CollectionSlugs.reactions,
@@ -10,6 +10,18 @@ const Reactions: CollectionConfig = {
   },
   access: {
     read: () => true,
+    delete: async ({ req: { user, payload }, id }) => {
+      if (user?.collection === CollectionSlugs.admins) return true
+
+      const reaction = await payload.findByID({
+        collection: CollectionSlugs.reactions,
+        id,
+        depth: 0,
+      })
+      if (!reaction) return true
+
+      return reaction.user === user.id
+    },
   },
   fields: [
     {
@@ -55,11 +67,13 @@ const Reactions: CollectionConfig = {
       label: 'User',
     },
   ],
-  endpoints: [{
-    path: '/count-by-type',
-    method: 'get',
-    handler: getReactionCountByType,
-  },]
+  endpoints: [
+    {
+      path: '/count-by-type',
+      method: 'get',
+      handler: getReactionCountByType,
+    },
+  ],
 }
 
 export default Reactions
