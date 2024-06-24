@@ -73,7 +73,7 @@ export const getReactionCountByType: PayloadHandler = async (req, res) => {
       collection: CollectionSlugs.reactions,
       where: {
         ['target.value']: {
-          in: uniqueReviews,
+          in: [...uniqueReviews, ...uniqueComments],
         },
       },
       pagination: false,
