@@ -12,6 +12,7 @@ export type ReactionCountByType = {
   thumbDown: number
   redHeart: number
   skull: number
+  hasReactions?: Reaction[]
 }
 
 function isArrayString(arr) {
@@ -21,7 +22,8 @@ function isArrayString(arr) {
 function countReaction(
   reactions: Reaction[],
   docType: 'review' | 'comment',
-  id: string
+  id: string,
+  userId: string
 ) {
   const data: ReactionCountByType = {
     id,
@@ -45,6 +47,10 @@ function countReaction(
       ({ target: { value }, type }) =>
         value === id && type === ReactionTypes.Skull
     ).length,
+
+    hasReactions: reactions.filter(
+      ({ target: { value }, user }) => value === id && user === userId
+    ),
   }
 
   return data
@@ -55,6 +61,7 @@ export const getReactionCountByType: PayloadHandler = async (
   res
 ): Promise<ReactionCountByType[]> => {
   const { user, payload } = req
+  const userId = user?.id || ''
 
   try {
     if (!req.query) return []
@@ -80,11 +87,9 @@ export const getReactionCountByType: PayloadHandler = async (
       depth: 0,
     })
 
-    if (!reactions.totalDocs) return []
-
     if (uniqueReviews.length) {
       for (const review of uniqueReviews) {
-        const data = countReaction(reactions.docs, 'review', review)
+        const data = countReaction(reactions.docs, 'review', review, userId)
 
         reactionCountByType.push(data)
       }
@@ -92,7 +97,7 @@ export const getReactionCountByType: PayloadHandler = async (
 
     if (uniqueComments.length) {
       for (const comment of uniqueComments) {
-        const data = countReaction(reactions.docs, 'comment', comment)
+        const data = countReaction(reactions.docs, 'comment', comment, userId)
 
         reactionCountByType.push(data)
       }
