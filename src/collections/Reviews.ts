@@ -71,7 +71,7 @@ const Reviews: CollectionConfig = {
           name: 'branch',
           label: 'Branch',
           type: 'text',
-          maxLength: 200,
+          maxLength: 100,
         },
         {
           name: 'duration',
@@ -83,7 +83,7 @@ const Reviews: CollectionConfig = {
           name: 'title',
           label: 'Title',
           type: 'text',
-          maxLength: 50,
+          maxLength: 100,
         },
       ],
     },
