@@ -44,7 +44,7 @@ const Companies: CollectionConfig = {
           label: 'Between 100 and 500',
         },
         {
-          value: NumberOfEmployees.above_500,
+          value: NumberOfEmployees.between_500_and_1000,
           label: 'Above 500',
         },
         {
@@ -82,6 +82,10 @@ const Companies: CollectionConfig = {
   ],
   access: {
     read: () => true,
+  },
+  versions: {
+    drafts: true,
+    maxPerDoc: 10,
   },
 }
 
