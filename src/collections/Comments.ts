@@ -2,8 +2,21 @@ import { getCommentCountByReview } from '@/endpoints/getCommentCountByReview'
 import { populatedUserField } from '@/fields/populatedUser'
 import { populateUser } from '@/hooks/populateUser'
 import { Comment } from 'payload/generated-types'
-import { CollectionConfig } from 'payload/types'
+import { Access, CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
+
+const isAdminOrCreator: Access = async ({ req: { user, payload }, id }) => {
+  if (user?.collection === CollectionSlugs.admins) return true
+
+  const comment = await payload.findByID({
+    collection: CollectionSlugs.comments,
+    id,
+    depth: 0,
+  })
+  if (!comment) return true
+
+  return comment.user === user.id
+}
 
 const Comments: CollectionConfig = {
   slug: CollectionSlugs.comments,
@@ -49,6 +62,8 @@ const Comments: CollectionConfig = {
   ],
   access: {
     read: () => true,
+    update: isAdminOrCreator,
+    delete: isAdminOrCreator,
   },
   hooks: {
     afterRead: [populateUser],

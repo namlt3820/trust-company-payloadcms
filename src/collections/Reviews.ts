@@ -3,7 +3,7 @@ import { populatedUserField } from '@/fields/populatedUser'
 import { populateUser } from '@/hooks/populateUser'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { Review } from 'payload/generated-types'
-import { CollectionConfig } from 'payload/types'
+import { Access, CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
 
 const aggregateTextValues = (obj, field) => {
@@ -21,6 +21,19 @@ const aggregateTextValues = (obj, field) => {
 
   traverse(obj)
   return result
+}
+
+const isAdminOrCreator: Access = async ({ req: { user, payload }, id }) => {
+  if (user?.collection === CollectionSlugs.admins) return true
+
+  const review = await payload.findByID({
+    collection: CollectionSlugs.reviews,
+    id,
+    depth: 0,
+  })
+  if (!review) return true
+
+  return review.user === user.id
 }
 
 const Reviews: CollectionConfig = {
@@ -172,6 +185,8 @@ const Reviews: CollectionConfig = {
   ],
   access: {
     read: () => true,
+    delete: isAdminOrCreator,
+    update: isAdminOrCreator,
   },
 }
 

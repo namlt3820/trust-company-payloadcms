@@ -1,7 +1,20 @@
 import { ReactionTypes } from '@/constants/ReactionTypes'
 import { getReactionCountByType } from '@/endpoints/getReactionCountByType'
-import { CollectionConfig } from 'payload/types'
+import { Access, CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
+
+const isAdminOrCreator: Access = async ({ req: { user, payload }, id }) => {
+  if (user?.collection === CollectionSlugs.admins) return true
+
+  const reaction = await payload.findByID({
+    collection: CollectionSlugs.reactions,
+    id,
+    depth: 0,
+  })
+  if (!reaction) return true
+
+  return reaction.user === user.id
+}
 
 const Reactions: CollectionConfig = {
   slug: CollectionSlugs.reactions,
@@ -10,18 +23,8 @@ const Reactions: CollectionConfig = {
   },
   access: {
     read: () => true,
-    delete: async ({ req: { user, payload }, id }) => {
-      if (user?.collection === CollectionSlugs.admins) return true
-
-      const reaction = await payload.findByID({
-        collection: CollectionSlugs.reactions,
-        id,
-        depth: 0,
-      })
-      if (!reaction) return true
-
-      return reaction.user === user.id
-    },
+    delete: isAdminOrCreator,
+    update: isAdminOrCreator,
   },
   fields: [
     {
