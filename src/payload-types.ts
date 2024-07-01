@@ -83,11 +83,12 @@ export interface Company {
   name: string;
   address: string;
   media: string | Media;
-  numberOfEmployees: 'below_100' | 'between_100_and_500' | 'above_500' | 'above_1000';
+  numberOfEmployees: 'below_100' | 'between_100_and_500' | 'between_500_and_1000' | 'above_1000';
   companyType: 'outsource' | 'product' | 'both';
   website?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

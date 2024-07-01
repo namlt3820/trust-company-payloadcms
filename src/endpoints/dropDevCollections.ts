@@ -20,7 +20,7 @@ export const dropDevCollections: PayloadHandler = async (
     return
   }
 
-  if (!user) {
+  if (!user || user.collections !== CollectionSlugs.admins) {
     res.status(401).json({ error: ErrorMessages.Unauthorized })
     return
   }

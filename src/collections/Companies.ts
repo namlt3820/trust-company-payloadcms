@@ -17,6 +17,7 @@ const Companies: CollectionConfig = {
       maxLength: 150,
       required: true,
       unique: true,
+      index: true,
     },
     {
       name: 'address',
@@ -45,7 +46,7 @@ const Companies: CollectionConfig = {
         },
         {
           value: NumberOfEmployees.between_500_and_1000,
-          label: 'Above 500',
+          label: 'Between 500 and 1000',
         },
         {
           value: NumberOfEmployees.above_1000,
@@ -73,15 +74,28 @@ const Companies: CollectionConfig = {
         },
       ],
       required: true,
+      index: true,
     },
     {
       name: 'website',
       type: 'text',
-      validate: (val) => checkSchema(val, joi.string().uri()),
+      validate: (val) =>
+        checkSchema(val, joi.string().uri().optional().allow('')),
+      maxLength: 150,
     },
   ],
   access: {
-    read: () => true,
+    read: ({ req }) => {
+      if (!req.user || req.user.collection !== CollectionSlugs.admins) {
+        return {
+          _status: {
+            equals: 'published',
+          },
+        }
+      }
+
+      return true
+    },
   },
   versions: {
     drafts: true,
