@@ -38,7 +38,6 @@ const Reports: CollectionConfig = {
         },
       ],
       defaultValue: ReportTypes.Spam,
-      required: true,
     },
     {
       name: 'otherType',
