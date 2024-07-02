@@ -1,47 +1,54 @@
+import { Feedback } from 'payload/generated-types'
 import { CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
 
 const Feedbacks: CollectionConfig = {
   slug: CollectionSlugs.feedbacks,
   admin: {
-    useAsTitle: 'title',
+    useAsTitle: 'summary',
   },
   fields: [
     {
-      name: 'title',
+      name: 'name',
       type: 'text',
-      maxLength: 150,
-      required: true,
+      maxLength: 100,
+      label: 'Name',
     },
     {
-      name: 'isFinised',
-      label: 'Is finished',
+      name: 'email',
+      type: 'email',
+      label: 'Email',
+    },
+    {
+      name: 'processed',
+      label: 'Processed',
       type: 'checkbox',
       index: true,
       defaultValue: false,
     },
     {
-      name: 'feedback',
+      name: 'content',
       type: 'textarea',
-      label: 'Feedback from user',
+      label: 'User Feedback',
       maxLength: 5000,
       required: true,
     },
     {
-      name: 'response',
-      label: 'Response from admin',
-      type: 'textarea',
-      maxLength: 5000,
-    },
-    {
-      name: 'user',
-      type: 'relationship',
-      relationTo: CollectionSlugs.users,
-      required: true,
-      index: true,
-      label: 'User',
+      name: 'summary',
+      type: 'text',
+      maxLength: 120,
+      hooks: {
+        beforeChange: [
+          ({ data }: { data?: Partial<Feedback> }) => {
+            return data?.content?.substring(0, 100) + '...' || ''
+          },
+        ],
+      },
     },
   ],
+  access: {
+    create: () => true,
+  },
 }
 
 export default Feedbacks

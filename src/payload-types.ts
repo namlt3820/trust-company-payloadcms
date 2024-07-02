@@ -164,11 +164,11 @@ export interface Reaction {
  */
 export interface Feedback {
   id: string;
-  title: string;
-  isFinised?: boolean | null;
-  feedback: string;
-  response?: string | null;
-  user: string | User;
+  name?: string | null;
+  email?: string | null;
+  processed?: boolean | null;
+  content: string;
+  summary?: string | null;
   updatedAt: string;
   createdAt: string;
 }
