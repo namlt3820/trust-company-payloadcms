@@ -16,7 +16,7 @@ export const getCommentCountByReview: PayloadHandler = async (req, res) => {
     const commentCountByReview: CommentCountByReview[] = []
     if (!req.query) res.json({ comments: commentCountByReview })
 
-    const { reviews } = req.query
+    const { reviews = [] } = req.query
 
     const uniqueReviews =
       reviews && isArrayString(reviews) ? _.uniq(reviews as string[]) : []
