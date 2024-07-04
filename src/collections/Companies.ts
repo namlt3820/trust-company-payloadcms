@@ -96,6 +96,7 @@ const Companies: CollectionConfig = {
 
       return true
     },
+    create: () => true,
   },
   versions: {
     drafts: true,
