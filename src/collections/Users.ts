@@ -1,3 +1,4 @@
+import { deleteUserData } from '@/hooks/deleteUserData'
 import { checkSchema } from '@/utilities/validateWithJoi'
 import joi from 'joi'
 import { CollectionConfig } from 'payload/types'
@@ -48,6 +49,9 @@ const Users: CollectionConfig = {
 
   access: {
     create: () => true,
+  },
+  hooks: {
+    afterDelete: [deleteUserData],
   },
 }
 

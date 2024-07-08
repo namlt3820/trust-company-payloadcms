@@ -1,6 +1,5 @@
 import { getCommentCountByReview } from '@/endpoints/getCommentCountByReview'
-import { populatedUserField } from '@/fields/populatedUser'
-import { populateUser } from '@/hooks/populateUser'
+import { deletecCommentData } from '@/hooks/deleteCommentData'
 import { Comment } from 'payload/generated-types'
 import { Access, CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
@@ -58,7 +57,6 @@ const Comments: CollectionConfig = {
         ],
       },
     },
-    populatedUserField(),
   ],
   access: {
     read: () => true,
@@ -66,7 +64,7 @@ const Comments: CollectionConfig = {
     delete: isAdminOrCreator,
   },
   hooks: {
-    afterRead: [populateUser],
+    afterDelete: [deletecCommentData],
   },
   endpoints: [
     {

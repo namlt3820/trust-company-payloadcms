@@ -1,6 +1,5 @@
 import { CompanyRates } from '@/constants/CompanyRates'
-import { populatedUserField } from '@/fields/populatedUser'
-import { populateUser } from '@/hooks/populateUser'
+import { deleteReviewData } from '@/hooks/deleteReviewData'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { Review } from 'payload/generated-types'
 import { Access, CollectionConfig } from 'payload/types'
@@ -44,7 +43,7 @@ const Reviews: CollectionConfig = {
     useAsTitle: 'summary',
   },
   hooks: {
-    afterRead: [populateUser],
+    afterDelete: [deleteReviewData],
   },
   fields: [
     {
@@ -181,7 +180,6 @@ const Reviews: CollectionConfig = {
         ],
       },
     },
-    populatedUserField(),
   ],
   access: {
     read: () => true,
