@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser'
 import express from 'express'
 import nodemailer from 'nodemailer'
 import payload from 'payload'
@@ -5,6 +6,8 @@ import payload from 'payload'
 require('dotenv').config()
 
 const app = express()
+
+app.use(cookieParser())
 
 // Redirect root to Admin panel
 app.get('/', (_, res) => {

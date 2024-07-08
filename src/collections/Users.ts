@@ -9,15 +9,16 @@ const Users: CollectionConfig = {
   auth: {
     verify: {
       generateEmailHTML: ({ req, token }) => {
+        const locale = req.cookies?.NEXT_LOCALE || 'en'
         const { body } = req
-        const url = `${process.env.CLIENT_URL}/verify?token=${token}`
+        const url = `${process.env.CLIENT_URL}/${locale}/account/verify?token=${token}`
         return `Hi ${body.name}, to access the user feature of TrustCompany website, please verify your email by clicking here: ${url}`
       },
       generateEmailSubject: () => 'Verify your email',
     },
     forgotPassword: {
       generateEmailHTML: ({ req, token }) => {
-        const url = `${process.env.CLIENT_URL}/verify?token=${token}`
+        const url = `${process.env.CLIENT_URL}/en/verify?token=${token}`
         return `You are receiving this because you (or someone else) have requested the reset of the password for your account. Please click on the following link, or paste this into your browser to complete the process: ${url}. If you did not request this, please ignore this email and your password will remain unchanged.`
       },
       generateEmailSubject: () => 'Forgot password',
