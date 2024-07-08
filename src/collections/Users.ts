@@ -49,6 +49,7 @@ const Users: CollectionConfig = {
 
   access: {
     create: () => true,
+    read: () => true,
   },
   hooks: {
     afterDelete: [deleteUserData],
