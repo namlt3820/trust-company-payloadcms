@@ -18,7 +18,8 @@ const Users: CollectionConfig = {
     },
     forgotPassword: {
       generateEmailHTML: ({ req, token }) => {
-        const url = `${process.env.CLIENT_URL}/en/verify?token=${token}`
+        const locale = req.cookies?.NEXT_LOCALE || 'en'
+        const url = `${process.env.CLIENT_URL}/${locale}/account/reset?token=${token}`
         return `You are receiving this because you (or someone else) have requested the reset of the password for your account. Please click on the following link, or paste this into your browser to complete the process: ${url}. If you did not request this, please ignore this email and your password will remain unchanged.`
       },
       generateEmailSubject: () => 'Forgot password',
