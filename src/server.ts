@@ -1,5 +1,5 @@
-import 'module-alias/register';
 import express from 'express'
+import nodemailer from 'nodemailer'
 import payload from 'payload'
 
 require('dotenv').config()
@@ -11,6 +11,16 @@ app.get('/', (_, res) => {
   res.redirect('/admin')
 })
 
+const transporter = nodemailer.createTransport({
+  host: 'smtp.resend.com',
+  secure: true,
+  port: 465,
+  auth: {
+    user: 'resend',
+    pass: process.env.RESEND_API_KEY,
+  },
+})
+
 const start = async () => {
   // Initialize Payload
   await payload.init({
@@ -18,6 +28,11 @@ const start = async () => {
     express: app,
     onInit: async () => {
       payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`)
+    },
+    email: {
+      fromAddress: process.env.RESEND_FROM_EMAIL,
+      fromName: process.env.RESEND_FROM_NAME,
+      transport: transporter,
     },
   })
 
