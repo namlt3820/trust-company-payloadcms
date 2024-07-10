@@ -66,11 +66,6 @@ export default buildConfig({
       fileSize: 500000, // 0.5MB, written in bytes
     },
   },
-  csrf: [
-    // Nextjs server
-    'http://localhost:3001',
-    // Payload server
-    'http://localhost:3000',
-  ],
-  cors: ['http://localhost:3001', 'http://localhost:3000'],
+  csrf: [process.env.CLIENT_URL, process.env.SERVER_URL],
+  cors: [process.env.CLIENT_URL, process.env.SERVER_URL],
 })
