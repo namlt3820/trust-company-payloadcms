@@ -17,7 +17,7 @@ export type ReactionCountByType = {
 }
 
 function countReaction(
-  reactions: Reaction[],
+  reactions: any[],
   docType: 'review' | 'comment',
   id: string,
   userId: string
