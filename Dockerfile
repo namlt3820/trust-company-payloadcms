@@ -3,6 +3,7 @@ FROM base as builder
 WORKDIR /home/node/app
 COPY package*.json ./
 RUN npm ci
+RUN apt-get update && apt-get -y install rsync
 COPY . .
 RUN npm run build
 
