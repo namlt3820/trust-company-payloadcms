@@ -28,6 +28,7 @@ jobs:
           script: |
             cd /projects/trust-company/trust-company-payloadcms
             git restore .
+            git checkout main
             git pull 
             docker compose down
             docker compose up --build -d
