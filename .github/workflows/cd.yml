@@ -27,4 +27,4 @@ jobs:
           port: 22
           script: |
             cd /projects/trust-company/trust-company-payloadcms
-            echo "hello" > output.txt
+            dkls
