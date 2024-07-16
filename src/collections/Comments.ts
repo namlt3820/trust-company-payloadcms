@@ -1,5 +1,6 @@
 import { getCommentCountByReview } from '@/endpoints/getCommentCountByReview'
 import { deletecCommentData } from '@/hooks/deleteCommentData'
+import { notifyAdmin } from '@/hooks/notifyAdmin'
 import { Comment } from 'payload/generated-types'
 import { Access, CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
@@ -65,6 +66,7 @@ const Comments: CollectionConfig = {
   },
   hooks: {
     afterDelete: [deletecCommentData],
+    afterChange: [notifyAdmin],
   },
   endpoints: [
     {

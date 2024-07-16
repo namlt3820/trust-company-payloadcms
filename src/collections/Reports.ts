@@ -1,4 +1,5 @@
 import { ReportType as ReportTypes } from '@/constants/ReportTypes'
+import { notifyAdmin } from '@/hooks/notifyAdmin'
 import { CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
 
@@ -63,6 +64,9 @@ const Reports: CollectionConfig = {
       label: 'User',
     },
   ],
+  hooks: {
+    afterChange: [notifyAdmin],
+  },
 }
 
 export default Reports
