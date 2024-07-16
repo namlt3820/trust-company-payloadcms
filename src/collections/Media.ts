@@ -1,3 +1,4 @@
+import { notifyAdmin } from '@/hooks/notifyAdmin'
 import path from 'path'
 import type { CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
@@ -17,4 +18,7 @@ export const Media: CollectionConfig = {
     create: () => true,
   },
   fields: [],
+  hooks: {
+    afterChange: [notifyAdmin],
+  },
 }

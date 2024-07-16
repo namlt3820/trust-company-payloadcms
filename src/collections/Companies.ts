@@ -1,5 +1,6 @@
 import { CompanyTypes } from '@/constants/CompanyTypes'
 import { NumberOfEmployees } from '@/constants/NumberOfEmployees'
+import { notifyAdmin } from '@/hooks/notifyAdmin'
 import { checkSchema } from '@/utilities/validateWithJoi'
 import joi from 'joi'
 import { CollectionConfig } from 'payload/types'
@@ -101,6 +102,9 @@ const Companies: CollectionConfig = {
   versions: {
     drafts: true,
     maxPerDoc: 10,
+  },
+  hooks: {
+    afterChange: [notifyAdmin],
   },
 }
 

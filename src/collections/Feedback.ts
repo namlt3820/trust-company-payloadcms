@@ -1,3 +1,4 @@
+import { notifyAdmin } from '@/hooks/notifyAdmin'
 import { Feedback } from 'payload/generated-types'
 import { CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
@@ -48,6 +49,9 @@ const Feedbacks: CollectionConfig = {
   ],
   access: {
     create: () => true,
+  },
+  hooks: {
+    afterChange: [notifyAdmin],
   },
 }
 

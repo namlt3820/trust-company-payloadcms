@@ -1,5 +1,6 @@
 import { CompanyRates } from '@/constants/CompanyRates'
 import { deleteReviewData } from '@/hooks/deleteReviewData'
+import { notifyAdmin } from '@/hooks/notifyAdmin'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { Review } from 'payload/generated-types'
 import { Access, CollectionConfig } from 'payload/types'
@@ -44,6 +45,7 @@ const Reviews: CollectionConfig = {
   },
   hooks: {
     afterDelete: [deleteReviewData],
+    afterChange: [notifyAdmin],
   },
   fields: [
     {

@@ -1,4 +1,5 @@
 import { deleteUserData } from '@/hooks/deleteUserData'
+import { notifyAdmin } from '@/hooks/notifyAdmin'
 import { checkSchema } from '@/utilities/validateWithJoi'
 import joi from 'joi'
 import { CollectionConfig } from 'payload/types'
@@ -55,6 +56,7 @@ const Users: CollectionConfig = {
   },
   hooks: {
     afterDelete: [deleteUserData],
+    afterChange: [notifyAdmin],
   },
 }
 

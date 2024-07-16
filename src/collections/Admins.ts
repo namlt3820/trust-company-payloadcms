@@ -1,3 +1,4 @@
+import { notifyAdmin } from '@/hooks/notifyAdmin'
 import { CollectionConfig } from 'payload/types'
 import { CollectionSlugs } from './CollectionSlugs'
 
@@ -13,6 +14,9 @@ const Admins: CollectionConfig = {
     // Email added by default
     // Add more fields as needed
   ],
+  hooks: {
+    afterChange: [notifyAdmin],
+  },
 }
 
 export default Admins
