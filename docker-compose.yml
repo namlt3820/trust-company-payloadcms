@@ -7,11 +7,7 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - .:/home/node/app
-      - node_modules:/home/node/app/node_modules
+      - ./media:/home/node/app/media
     working_dir: /home/node/app/
     env_file:
       - .env.production
-
-volumes:
-  node_modules:
