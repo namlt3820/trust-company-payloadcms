@@ -25,11 +25,11 @@
     "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
-    "express": "^4.19.2",
+    "express": "^4.21.0",
     "joi": "^17.13.1",
     "module-alias": "^2.2.3",
     "nodemailer": "^6.9.14",
-    "payload": "^2.0.0",
+    "payload": "^2.29.0",
     "resend": "^3.4.0",
     "copyfiles": "^2.4.1",
     "tsc-alias": "^1.8.10"
